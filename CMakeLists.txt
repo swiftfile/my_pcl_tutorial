@@ -200,11 +200,30 @@ include_directories(
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 
-add_executable(example src/example.cpp)
-target_link_libraries(example
+add_executable(downSamplingbyvoxel src/downSamplingbyvoxel.cpp )
+target_link_libraries(downSamplingbyvoxel
         ${catkin_LIBRARIES}
         ${roslib_LIBRARIES}
         ${PCL_LIBRARIES}
         ${PCL_COMMON_LIBRARIES}
         ${PCL_IO_LIBRARIES}
 )
+
+add_executable(planeSegmentation src/planeSegmentation.cpp)
+target_link_libraries(planeSegmentation
+        ${catkin_LIBRARIES}
+        ${roslib_LIBRARIES}
+        ${PCL_LIBRARIES}
+        ${PCL_COMMON_LIBRARIES}
+        ${PCL_IO_LIBRARIES}
+)
+
+
+add_executable(normalEstimation src/normal_estimation.cpp)
+target_link_libraries(normalEstimation
+        ${catkin_LIBRARIES}
+        ${roslib_LIBRARIES}
+        ${PCL_LIBRARIES}
+        ${PCL_COMMON_LIBRARIES}
+        ${PCL_IO_LIBRARIES}
+        )

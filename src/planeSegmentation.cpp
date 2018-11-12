@@ -38,6 +38,7 @@ void plane_cb(const sensor_msgs::PointCloud2ConstPtr &sub_cloud) {
     //create the segmentation object
 
     pcl::SACSegmentation<pcl::PointXYZRGBA> seg;
+
     //Optional
     seg.setOptimizeCoefficients(true);
     //Mandatory
@@ -50,6 +51,8 @@ void plane_cb(const sensor_msgs::PointCloud2ConstPtr &sub_cloud) {
 
     seg.setInputCloud(cloud.makeShared());
     seg.segment(*inliers, *coefficients);
+
+    ROS_INFO("plane equation is %f x + %f y + %f z = 0",coefficients->values[0],coefficients->values[1],coefficients->values[2]);
 
 
 
@@ -77,10 +80,10 @@ int main(int argc, char **argv) {
 
     ros::init(argc, argv, "planeSegmentation");
     ros::NodeHandle nh;
-
+    ROS_INFO("planeSegmentation has launched.");
     ros::param::set("dist_th", 0.1);
-    ros::Subscriber sub = nh.subscribe("/camera/depth/color/points", 1, plane_cb);
-//    ros::Subscriber sub = nh.subscribe("/cloud", 1, plane_cb);
+//    ros::Subscriber sub = nh.subscribe("/camera/depth/color/points", 1, plane_cb);
+    ros::Subscriber sub = nh.subscribe("input", 1, plane_cb);
 
     pub = nh.advertise<pcl::PointCloud<pcl::PointXYZRGBA> >("/planedcloud", 1);
 
